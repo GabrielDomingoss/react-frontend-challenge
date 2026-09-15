@@ -1,5 +1,6 @@
 import { BookOpen } from "lucide-react";
 import type { IBook } from "../model/book-types";
+import { ShelfButton } from "@/features/shelf/ui/shelf-button";
 
 interface IBookCardProps {
   book: IBook;
@@ -42,6 +43,8 @@ export function BookCard({ book }: IBookCardProps) {
         {book.publishedDate && (
           <p className="text-xs text-muted-foreground">{book.publishedDate}</p>
         )}
+
+        <ShelfButton book={book} />
       </div>
     </article>
   );
