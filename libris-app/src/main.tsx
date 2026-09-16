@@ -5,6 +5,7 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { routeTree } from "./routeTree.gen.ts";
 import { queryClient } from "./shared/lib/query-client.ts";
+import { ThemeSync } from "./features/theme/ui/theme-sync.tsx";
 
 const router = createRouter({
   routeTree,
@@ -25,6 +26,7 @@ if (!rootElement) {
 createRoot(rootElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ThemeSync />
       <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>,

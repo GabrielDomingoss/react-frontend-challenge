@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/features/auth/model/auth-store";
+import { ThemeToggle } from "@/features/theme/ui/theme-toggle";
 import { Link, Outlet, useNavigate } from "@tanstack/react-router";
 
 export function AuthenticatedLayout() {
@@ -48,9 +49,13 @@ export function AuthenticatedLayout() {
             </nav>
           </div>
 
-          <Button variant="ghost" onClick={() => void handleLogout()}>
-            Logout
-          </Button>
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+
+            <Button variant="ghost" onClick={() => void handleLogout()}>
+              Logout
+            </Button>
+          </div>
         </div>
       </header>
 
