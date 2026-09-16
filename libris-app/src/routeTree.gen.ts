@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as AuthenticatedDiscoverRouteImport } from './routes/_authenticated.discover'
 import { Route as AuthenticatedShelfRouteImport } from './routes/_authenticated.shelf'
+import { Route as AuthenticatedBookBookIdRouteImport } from './routes/_authenticated.book.$bookId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,18 +40,25 @@ const AuthenticatedShelfRoute = AuthenticatedShelfRouteImport.update({
   path: '/shelf',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedBookBookIdRoute = AuthenticatedBookBookIdRouteImport.update({
+  id: '/book/$bookId',
+  path: '/book/$bookId',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/discover': typeof AuthenticatedDiscoverRoute
   '/shelf': typeof AuthenticatedShelfRoute
+  '/book/$bookId': typeof AuthenticatedBookBookIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/discover': typeof AuthenticatedDiscoverRoute
   '/shelf': typeof AuthenticatedShelfRoute
+  '/book/$bookId': typeof AuthenticatedBookBookIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,12 +67,13 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/_authenticated/discover': typeof AuthenticatedDiscoverRoute
   '/_authenticated/shelf': typeof AuthenticatedShelfRoute
+  '/_authenticated/book/$bookId': typeof AuthenticatedBookBookIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/discover' | '/shelf'
+  fullPaths: '/' | '/login' | '/discover' | '/shelf' | '/book/$bookId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/discover' | '/shelf'
+  to: '/' | '/login' | '/discover' | '/shelf' | '/book/$bookId'
   id:
     | '__root__'
     | '/'
@@ -72,6 +81,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/_authenticated/discover'
     | '/_authenticated/shelf'
+    | '/_authenticated/book/$bookId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -117,17 +127,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedShelfRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/book/$bookId': {
+      id: '/_authenticated/book/$bookId'
+      path: '/book/$bookId'
+      fullPath: '/book/$bookId'
+      preLoaderRoute: typeof AuthenticatedBookBookIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedDiscoverRoute: typeof AuthenticatedDiscoverRoute
   AuthenticatedShelfRoute: typeof AuthenticatedShelfRoute
+  AuthenticatedBookBookIdRoute: typeof AuthenticatedBookBookIdRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDiscoverRoute: AuthenticatedDiscoverRoute,
   AuthenticatedShelfRoute: AuthenticatedShelfRoute,
+  AuthenticatedBookBookIdRoute: AuthenticatedBookBookIdRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

@@ -1,5 +1,7 @@
 import { api } from "@/shared/api/api-client";
 import type {
+  IBook,
+  IGoogleBookVolume,
   ISearchBooksParams,
   ISearchBooksResult,
 } from "../model/book-types";
@@ -27,4 +29,14 @@ export async function searchBooks(
     books: (response.data.items ?? []).map(mapGoogleBook),
     totalItems: response.data.totalItems,
   };
+}
+
+export async function getBookById(bookId: string): Promise<IBook> {
+  const response = await api.get<IGoogleBookVolume>(`volumes/${bookId}`, {
+    params: {
+      ...(apiKey && { key: apiKey }),
+    },
+  });
+
+  return mapGoogleBook(response.data);
 }
